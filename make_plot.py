@@ -24,24 +24,26 @@ def plt_map(name="bsb-print-original", bg_color='#F2EDEB', plt_color='#262626', 
     name      - nome do arquivo de saida
     bg_color  - cor do fundo
     plt_color - cor do plot
+    title_color - cor do título do plot
+    sign_color - cor da assinatura
     '''
     logtime('Starting the plot of '+name+' file')
     # n=1.5
     fig, ax = plt.subplots(figsize=(43.3, 29.52))
-    pp_via.plot(color=plt_color, ax=ax, linewidth=0.05)
+    pp_via.plot(color=plt_color, ax=ax, linewidth=1)
     fig.set_facecolor(bg_color)
 
     fpath = os.path.join(rcParams["datapath"],
                          "/Users/giovannisantin/Library/Fonts/Cinematografica-Regular-trial.ttf")
-    prop = fm.FontProperties(fname=fpath, size='large')
+    prop = fm.FontProperties(fname=fpath, size=180)
     # plt.text(0.9, 0.1, "Rosto de Brasília", transform=fig.transFigure,
-    plt.text(0.6, 0.13,
+    plt.text(0.85, 0.5,
     '''
     ROSTO DA
     CAPITAL
     '''
     , transform=fig.transFigure,
-                 fontproperties=prop, color=title_color, **{'ha': 'center'})
+                 fontproperties=prop, color=title_color, **{'ha': 'right', 'va':'center'})
 
     # fpath = os.path.join(rcParams["datapath"],
     #                      "/System/Library/Fonts/Supplemental/Arial.ttf")
@@ -55,8 +57,16 @@ def plt_map(name="bsb-print-original", bg_color='#F2EDEB', plt_color='#262626', 
     ax.set_aspect('equal', anchor=(0.2, 0.5))
     plt.axis('off')
     logtime(' ├─ Saving rendered map')
+
+    metadata={
+        "Title": "Rosto de Brasília",
+        "Author": "Gigio Santin"
+    }
+
     plt.savefig('plots/'+name+'.png',
-                facecolor=fig.get_facecolor(), edgecolor='none', dpi=300);
+                facecolor=fig.get_facecolor(),
+                edgecolor='none', dpi=300,
+                metadata=metadata);
     logtime(' └─ Finish')
 
 if __name__ == '__main__':
